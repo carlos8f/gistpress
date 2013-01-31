@@ -17,7 +17,10 @@
     "github": "~0.1.8",
     "idgen": "~1.2.0",
     "cookies": "~0.3.6",
-    "hydration": "~0.3.1"
+    "hydration": "~0.3.1",
+    "redsess": "~0.2.0",
+    "formidable": "~1.0.11",
+    "keygrip": "~0.2.2"
   },
   "devDependencies": {
     "mocha": "*"

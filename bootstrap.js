@@ -1,5 +1,4 @@
 var app = require('that');
-module.exports = app;
 
 // project root
 app.root = __dirname;
@@ -33,3 +32,6 @@ app.router = require('middler')(app.server);
 app.init = function (cb) {
   app.series('init', cb);
 };
+
+// plugins (placeholder)
+app.plugins = {};

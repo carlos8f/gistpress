@@ -1,6 +1,10 @@
 var app = require('that');
 
 require('./bootstrap');
+
+require('./plugins/session');
+app.router.first(app.session);
+
 require('./controllers');
 
 app.init(function (err) {
