@@ -15,6 +15,11 @@ describe('session', function () {
 
     app.router
       .first(app.plugins.session)
+      .get('/nothing', function (req, res, next) {
+        assert.deepEqual(req.session, {});
+        res.writeHead(201);
+        res.end();
+      })
       .get('/get', function (req, res, next) {
         assert.deepEqual(req.session, testData);
         sessId = req._session.id;
@@ -42,6 +47,14 @@ describe('session', function () {
         port = app.server.address().port;
         done();
       });
+    });
+  });
+
+  it('nothing', function (done) {
+    request.get('http://localhost:' + port + '/nothing', function (err, resp, body) {
+      assert.ifError(err);
+      assert(!resp.headers['set-cookie']);
+      done();
     });
   });
 

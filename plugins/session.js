@@ -30,12 +30,15 @@ Session.getChecksum = function (data) {
     .digest('hex');
 };
 
-Session.prototype.regenerate = function () {
+Session.prototype.regenerate = function (updateChecksum) {
   if (this.id) {
     app.redis.DEL(app.redisKey('sess', this.id));
   }
   this.id = idgen(16);
   this.req.session = {};
+  if (updateChecksum) {
+    this.checksum = Session.getChecksum(this.req.session);
+  }
 };
 
 Session.prototype.maybeSendCookie = function () {
@@ -97,13 +100,13 @@ Session.prototype.middleware = function (req, res, next) {
         self.checksum = Session.getChecksum(req.session);
       }
       else {
-        self.regenerate();
+        self.regenerate(true);
       }
       next();
     });
   }
   else {
-    self.regenerate();
+    self.regenerate(true);
     next();
   }
 };
